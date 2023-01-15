@@ -1,34 +1,37 @@
 package com.eldorado.sistemafaturamento.faturamento;
 
 import com.eldorado.sistemafaturamento.file.FileManager;
+import com.sun.tools.javac.Main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
-class FileManagerNotaFiscal implements FileManager {
+class FileManagerFaturamento implements FileManager {
 
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static String RESOURCE = "./resource/faturamento";
 
-    protected void readNotaFiscal() throws IOException {
+    protected List<Faturamento> readFaturamento() throws IOException {
         var bf = carregaArquivo(RESOURCE + "/faturamento.txt");
         var line = bf.readLine();
         List<String> listCompanyWithError = new ArrayList<>();
+        List<Faturamento> listaFaturamento = new ArrayList<Faturamento>();
+
         while(line != null) {
             String vetorFaturamento[] = line.split(";");
             try {
-
-                Faturamento faturamento = montaObjeto(vetorFaturamento);
-                System.out.println(faturamento.toString());
+                listaFaturamento.add(montaObjeto(vetorFaturamento));
                 line = bf.readLine();
             } catch (NumberFormatException e) {
-                System.out.println("ERRO : " + e.getMessage());
+                LOGGER.info("ERRO : " + e.getMessage());
                 listCompanyWithError.add(vetorFaturamento[0]);
                 line = bf.readLine();
             }
         }
-        System.out.println("ERRO: " + listCompanyWithError.toString());
+        return listaFaturamento;
     }
 
     private void relatorioDeErro() {

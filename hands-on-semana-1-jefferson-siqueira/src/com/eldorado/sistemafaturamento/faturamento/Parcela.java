@@ -1,8 +1,9 @@
 package com.eldorado.sistemafaturamento.faturamento;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-class Parcela {
+public class Parcela {
 
     private double valorParcela;
     private LocalDate dataParcela;

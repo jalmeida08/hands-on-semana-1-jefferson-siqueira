@@ -3,12 +3,13 @@ package com.eldorado.sistemafaturamento.faturamento;
 import java.util.ArrayList;
 import java.util.List;
 
-class Faturamento {
+public class Faturamento {
 
     private String company;
     private int mes;
     private int ano;
     private List<Parcela> parcela = new ArrayList<>();
+    private Double totalParcela;
 
     public String getCompany() {
         return company;
@@ -40,6 +41,18 @@ class Faturamento {
 
     public void setParcela(List<Parcela> parcela) {
         this.parcela = parcela;
+    }
+
+    public double getTotalParcela() {
+        return this.parcela.stream()
+                .mapToDouble(Parcela::getValorParcela).sum();
+    }
+
+    public double getParcela(final int numParcela) {
+        var size = this.parcela.size();
+        if(numParcela > size)
+            return 0;
+        return this.parcela.get(numParcela).getValorParcela();
     }
 
     @Override
