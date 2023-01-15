@@ -2,56 +2,55 @@ package com.eldorado.sistemafaturamento.nota;
 
 import com.eldorado.sistemafaturamento.util.Util;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 class NotaBuilder {
 
     private String company;
-    private int mes;
-    private int ano;
-    private double valor;
-    private LocalDate dataEmissao;
-    private long nota;
+    private int month;
+    private int year;
+    private double amount;
+    private LocalDate dateEmission;
+    private long note;
 
     public NotaBuilder company(final String company) {
         this.company = company;
         return this;
     }
 
-    public NotaBuilder ano(final String ano) {
-        this.ano = Integer.valueOf(ano);
+    public NotaBuilder year(final String year) {
+        this.year = Integer.valueOf(year);
         return this;
     }
 
-    public NotaBuilder valor(final String valor) {
-        this.valor = Double.valueOf(valor.replace(",", "."));
+    public NotaBuilder amount(final String amount) {
+        this.amount = Double.valueOf(amount.replace(",", "."));
         return this;
     }
 
-    public NotaBuilder mes(final String mes) {
-        this.mes = Integer.valueOf(mes);
+    public NotaBuilder month(final String month) {
+        this.month = Integer.valueOf(month);
         return this;
     }
 
-    public NotaBuilder dataEmissao(final String dataEmissao) {
-        this.dataEmissao = Util.stringToDate(dataEmissao);
+    public NotaBuilder dateEmission(final String dateEmission) {
+        this.dateEmission = Util.stringToDate(dateEmission);
         return this;
     }
 
-    public NotaBuilder nota(final String nota) {
-        this.nota = Long.valueOf(nota);
+    public NotaBuilder note(final String note) {
+        this.note = Long.valueOf(note);
         return this;
     }
 
-    public Nota build() {
-        var n = new Nota();
-        n.setNota(this.nota);
-        n.setAno(this.ano);
-        n.setDataEmissao(this.dataEmissao);
+    public Note build() {
+        var n = new Note();
+        n.setNote(this.note);
+        n.setYear(this.year);
+        n.setDateEmission(this.dateEmission);
         n.setCompany(this.company);
-        n.setMes(this.mes);
-        n.setValor(this.valor);
+        n.setMonth(this.month);
+        n.setAmount(this.amount);
         return n;
     }
 

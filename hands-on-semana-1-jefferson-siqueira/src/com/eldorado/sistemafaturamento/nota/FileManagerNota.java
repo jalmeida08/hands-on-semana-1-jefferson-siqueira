@@ -13,48 +13,48 @@ class FileManagerNota implements FileManager {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private static String RESOURCE = "./resource/nota";
 
-    protected List<Nota> readNota() throws IOException {
+    protected List<Note> readNota() throws IOException {
         var bf = carregaArquivo(RESOURCE + "/nota.txt");
         var line = bf.readLine();
-        List<Nota> listNota = new ArrayList<>();
+        List<Note> listNote = new ArrayList<>();
         while (line != null) {
             String nota[] = new String[line.split(";").length];
             nota = line.split(";");
             try {
-                Nota n = montaObjeto(nota);
-                listNota.add(n);
+                Note n = montaObjeto(nota);
+                listNote.add(n);
                 line = bf.readLine();
             } catch (NumberFormatException e) {
                 LOGGER.info("Erro: "+ e.getMessage());
                 line = bf.readLine();
             }
         }
-        return listNota;
+        return listNote;
     }
 
-    private Nota montaObjeto(String[] nota) {
+    private Note montaObjeto(String[] nota) {
         if(nota.length < 6)
             return montaObjetoSemValor(nota);
         return montaObjetoCompleto(nota);
     }
 
-    private Nota montaObjetoSemValor(String[] nota) {
+    private Note montaObjetoSemValor(String[] nota) {
         return new NotaBuilder()
                 .company(nota[0])
-                .mes(nota[1])
-                .ano(nota[2])
+                .month(nota[1])
+                .year(nota[2])
                 .build();
     }
 
 
-    private Nota montaObjetoCompleto(String[] nota) {
+    private Note montaObjetoCompleto(String[] nota) {
         return new NotaBuilder()
                 .company(nota[0])
-                .mes(nota[1])
-                .ano(nota[2])
-                .valor(nota[3])
-                .dataEmissao(nota[4])
-                .nota(nota[5])
+                .month(nota[1])
+                .year(nota[2])
+                .amount(nota[3])
+                .dateEmission(nota[4])
+                .note(nota[5])
                 .build();
     }
 
