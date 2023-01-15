@@ -1,13 +1,22 @@
 package com.eldorado.sistemafaturamento.faturamento;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 public class ControleFaturamento {
 
-    public List<Faturamento> iniciaFaturamento() throws IOException {
+    public Map<Integer, Map<String, Double>> listFaturamentoForYearAndCompany() throws IOException {
         var lstFaturamento = new FileManagerFaturamento().readFaturamento();
-        new ServiceFaturamento().calculaFaturamento(lstFaturamento);
-        return lstFaturamento;
+        return new ServiceFaturamento().findListFaturamentoForYearAndCompany(lstFaturamento);
+    }
+
+    public Map<Integer, Map<String, Double[]>> companyGroupForYearAndSumParcelaForCompany() throws IOException {
+        var lstFaturamento = new FileManagerFaturamento().readFaturamento();
+        return new ServiceFaturamento().findCompanyGroupForYearAndSumParcelaForCompany(lstFaturamento);
+    }
+
+    public Map<Integer, Map<Integer, Map<String, Double>>> companyGroupForYearAndMonthAndSumParcela() throws IOException {
+        var lstFaturamento = new FileManagerFaturamento().readFaturamento();
+        return new ServiceFaturamento().findCompanyGroupForYearAndMonthAndSumParcela(lstFaturamento);
     }
 }

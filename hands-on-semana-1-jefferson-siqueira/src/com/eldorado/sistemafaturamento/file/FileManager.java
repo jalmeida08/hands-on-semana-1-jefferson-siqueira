@@ -12,5 +12,12 @@ public interface FileManager {
         return new BufferedWriter(new FileWriter(path));
     }
 
-    void closeRead(BufferedReader bf) throws IOException;
+    default void closeRead(BufferedReader br) throws IOException {
+        br.close();
+    }
+    default void closeWriter(BufferedWriter bf) throws IOException{
+        bf.close();
+    }
+
+
 }

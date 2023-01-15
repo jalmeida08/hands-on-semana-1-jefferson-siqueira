@@ -8,11 +8,19 @@ import java.util.stream.Collectors;
 
 class ServiceFaturamento {
 
-    String calculaFaturamento(List<Faturamento> listaFaturamento) {
-        Map<Integer, Map<String, Double>> listFaturamentoForYearAndCompany = this.companyGroupForYearAndSumParcela(listaFaturamento);
-        Map<Integer, Map<String, Double[]>> companyGroupForYearAndSumParcelaForCompany = this.companyGroupForYearAndSumParcelaForCompany(listaFaturamento);
-        return "";
+    Map<Integer, Map<String, Double>> findListFaturamentoForYearAndCompany(List<Faturamento> listaFaturamento) {
+        return this.companyGroupForYearAndSumParcela(listaFaturamento);
     }
+
+    Map<Integer, Map<String, Double[]>>  findCompanyGroupForYearAndSumParcelaForCompany(List<Faturamento> listaFaturamento) {
+        return this.companyGroupForYearAndSumParcelaForCompany(listaFaturamento);
+    }
+
+    Map<Integer, Map<Integer, Map<String, Double>>> findCompanyGroupForYearAndMonthAndSumParcela(List<Faturamento> listaFaturamento) {
+        return this.companyGroupForYearAndMonthAndSumParcela(listaFaturamento);
+    }
+
+
 
     private Map<Integer, Map<String, Double>> companyGroupForYearAndSumParcela(List<Faturamento> listaFaturamento) {
         return listaFaturamento
@@ -21,6 +29,19 @@ class ServiceFaturamento {
                         Collectors.groupingBy(
                                         Faturamento::getAno, Collectors.groupingBy(
                                                 Faturamento::getCompany, Collectors.summingDouble(Faturamento::getTotalParcela))
+                        )
+                );
+    }
+
+    private Map<Integer, Map<Integer, Map<String, Double>>> companyGroupForYearAndMonthAndSumParcela(List<Faturamento> listaFaturamento) {
+        return listaFaturamento
+                .stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Faturamento::getAno, Collectors.groupingBy(
+                                        Faturamento::getMes, Collectors.groupingBy(
+                                            Faturamento::getCompany, Collectors.summingDouble(Faturamento::getTotalParcela))
+                                        )
                         )
                 );
     }
@@ -33,7 +54,6 @@ class ServiceFaturamento {
         GroupForYearAndSumParcelaForCompany(listaFaturamento, listCompanyGroupForYearAndSumParcelaForCompany);
         return listCompanyGroupForYearAndSumParcelaForCompany;
     }
-
 
     private void faturamentoAgroupForYears(List<Faturamento> listaFaturamento, Map<Integer, Map<String, Double[]>> listCompanyGroupForYearAndSumParcelaForCompany) {
         listaFaturamento.stream().parallel().forEach(f -> {

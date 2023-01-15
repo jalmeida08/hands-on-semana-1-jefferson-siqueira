@@ -7,7 +7,7 @@ public class Nota {
     private String company;
     private int mes;
     private int ano;
-    private BigDecimal valor;
+    private double valor;
     private LocalDate dataEmissao;
     private long nota;
 
@@ -35,11 +35,11 @@ public class Nota {
         this.ano = ano;
     }
 
-    public BigDecimal getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

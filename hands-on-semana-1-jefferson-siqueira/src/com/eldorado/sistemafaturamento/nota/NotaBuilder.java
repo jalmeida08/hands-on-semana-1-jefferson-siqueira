@@ -10,7 +10,7 @@ class NotaBuilder {
     private String company;
     private int mes;
     private int ano;
-    private BigDecimal valor;
+    private double valor;
     private LocalDate dataEmissao;
     private long nota;
 
@@ -25,7 +25,7 @@ class NotaBuilder {
     }
 
     public NotaBuilder valor(final String valor) {
-        this.valor = BigDecimal.valueOf(Double.valueOf(valor.replace(",", ".")));
+        this.valor = Double.valueOf(valor.replace(",", "."));
         return this;
     }
 
