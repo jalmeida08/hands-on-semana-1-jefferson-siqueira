@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.stream.Collectors;
 
-class ServiceFaturamento {
+class FaturamentoService {
 
     Map<Integer, Map<String, Double>> findListFaturamentoForYearAndCompany(List<Faturamento> listaFaturamento) {
         return this.companyGroupForYearAndSumParcela(listaFaturamento);
@@ -27,7 +27,7 @@ class ServiceFaturamento {
                 .stream()
                 .collect(
                         Collectors.groupingBy(
-                                        Faturamento::getAno, Collectors.groupingBy(
+                                        Faturamento::getYear, Collectors.groupingBy(
                                                 Faturamento::getCompany, Collectors.summingDouble(Faturamento::getTotalParcela))
                         )
                 );
@@ -38,8 +38,8 @@ class ServiceFaturamento {
                 .stream()
                 .collect(
                         Collectors.groupingBy(
-                                Faturamento::getAno, Collectors.groupingBy(
-                                        Faturamento::getMes, Collectors.groupingBy(
+                                Faturamento::getYear, Collectors.groupingBy(
+                                        Faturamento::getMonth, Collectors.groupingBy(
                                             Faturamento::getCompany, Collectors.summingDouble(Faturamento::getTotalParcela))
                                         )
                         )
@@ -57,7 +57,7 @@ class ServiceFaturamento {
 
     private void faturamentoAgroupForYears(List<Faturamento> listaFaturamento, Map<Integer, Map<String, Double[]>> listCompanyGroupForYearAndSumParcelaForCompany) {
         listaFaturamento.stream().parallel().forEach(f -> {
-            listCompanyGroupForYearAndSumParcelaForCompany.putIfAbsent(f.getAno(), new HashMap<String, Double[]>());
+            listCompanyGroupForYearAndSumParcelaForCompany.putIfAbsent(f.getYear(), new HashMap<String, Double[]>());
         });
     }
     private void companyAgroupForYears(List<Faturamento> listaFaturamento, Map<Integer, Map<String, Double[]>> listCompanyGroupForYearAndSumParcelaForCompany) {
@@ -66,12 +66,12 @@ class ServiceFaturamento {
             arrayParcela[0] = Double.valueOf(0);
             arrayParcela[1] = Double.valueOf(0);
             arrayParcela[2] = Double.valueOf(0);
-            listCompanyGroupForYearAndSumParcelaForCompany.get(f.getAno()).putIfAbsent(f.getCompany(), arrayParcela);
+            listCompanyGroupForYearAndSumParcelaForCompany.get(f.getYear()).putIfAbsent(f.getCompany(), arrayParcela);
         });
     }
     private void GroupForYearAndSumParcelaForCompany(List<Faturamento> listaFaturamento, Map<Integer, Map<String, Double[]>> listCompanyGroupForYearAndSumParcelaForCompany) {
         listaFaturamento.stream().forEach(f -> {
-            var arrayParcela = listCompanyGroupForYearAndSumParcelaForCompany.get(f.getAno()).get(f.getCompany());
+            var arrayParcela = listCompanyGroupForYearAndSumParcelaForCompany.get(f.getYear()).get(f.getCompany());
             arrayParcela[0] = CalculaParcela(arrayParcela, f, 0);
             arrayParcela[1] = CalculaParcela(arrayParcela, f, 1);
             arrayParcela[2] = CalculaParcela(arrayParcela, f, 2);

@@ -41,8 +41,8 @@ class FaturamentoBuilder {
     public Faturamento build() {
         var f = new Faturamento();
         f.setCompany(this.company);
-        f.setAno(this.ano);
-        f.setMes(this.mes);
+        f.setYear(this.ano);
+        f.setMonth(this.mes);
         f.setParcela(this.parcela);
         return f;
     }
@@ -50,8 +50,8 @@ class FaturamentoBuilder {
 
     private Parcela montaObjetoParcela(String valor, String data) {
         var p = new Parcela();
-        p.setDataParcela(Util.stringToDate(data));
-        p.setValorParcela(Double.valueOf(valor.replace(",", ".")));
+        p.setDate(Util.stringToDate(data));
+        p.setAmount(Double.valueOf(valor.replace(",", ".")));
         return p;
     }
 

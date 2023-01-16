@@ -1,34 +1,30 @@
 package com.eldorado.sistemafaturamento.faturamento;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Parcela {
 
-    private double valorParcela;
-    private LocalDate dataParcela;
+    private double amount;
+    private LocalDate date;
 
-    public double getValorParcela() {
-        return valorParcela;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setValorParcela(double valorParcela) {
-        this.valorParcela = valorParcela;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public LocalDate getDataParcela() {
-        return dataParcela;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDataParcela(LocalDate dataParcela) {
-        this.dataParcela = dataParcela;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "Parcela{" +
-                "valorParcela=" + valorParcela +
-                ", dataParcela=" + dataParcela +
-                '}';
+        return String.format("%s;%s;", amount, date);
     }
 }

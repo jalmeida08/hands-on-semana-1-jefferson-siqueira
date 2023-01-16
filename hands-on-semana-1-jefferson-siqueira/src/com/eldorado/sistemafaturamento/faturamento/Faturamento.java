@@ -6,10 +6,9 @@ import java.util.List;
 public class Faturamento {
 
     private String company;
-    private int mes;
-    private int ano;
+    private int month;
+    private int year;
     private List<Parcela> parcela = new ArrayList<>();
-    private Double totalParcela;
 
     public String getCompany() {
         return company;
@@ -19,20 +18,20 @@ public class Faturamento {
         this.company = company;
     }
 
-    public int getMes() {
-        return mes;
+    public int getMonth() {
+        return month;
     }
 
-    public void setMes(int mes) {
-        this.mes = mes;
+    public void setMonth(int month) {
+        this.month = month;
     }
 
-    public int getAno() {
-        return ano;
+    public int getYear() {
+        return year;
     }
 
-    public void setAno(int ano) {
-        this.ano = ano;
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public List<Parcela> getParcela() {
@@ -45,23 +44,18 @@ public class Faturamento {
 
     public double getTotalParcela() {
         return this.parcela.stream()
-                .mapToDouble(Parcela::getValorParcela).sum();
+                .mapToDouble(Parcela::getAmount).sum();
     }
 
     public double getParcela(final int numParcela) {
         var size = this.parcela.size();
         if(numParcela > size)
             return 0;
-        return this.parcela.get(numParcela).getValorParcela();
+        return this.parcela.get(numParcela).getAmount();
     }
 
     @Override
     public String toString() {
-        return "Faturamento{" +
-                "company='" + company + '\'' +
-                ", mes=" + mes +
-                ", ano=" + ano +
-                ", parcela=" + parcela +
-                '}';
+        return String.format("%s;%s;%s;%s;", company, year, month, parcela);
     }
 }
